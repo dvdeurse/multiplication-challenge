@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Table game</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="lib/bootstrap/bootstrap-vue.css" rel="stylesheet">
+        <style>
+            .border-5 {
+                border-width:5px !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" data-app="true">
+            <br/>
+            <b-container>                
+                <b-card no-body>
+                    <b-card-header>
+                        <b-dropdown id="ddown-right" right text="Menu" variant="link" class="float-right">
+                            <b-dropdown-item 
+                                v-for="(item, i) in menu" 
+                                :key="item.title"
+                                @click="switchMode(i)">{{ item.title }}</b-dropdown-item>
+                        </b-dropdown>
+                        <h3>{{gameTitle}}</h3>
+                    </b-card-header>
+                    <b-card-body>
+                        <game v-if="mode == 0"></game>
+                        <settings v-if="mode == 1"></settings>
+                        <stats v-if="mode == 2"></stats>
+                    </b-card-body>                    
+                </b-card>
+            </b-container>
+            <br/>
+        </div>
+        <script src="lib/vue/vue.js"></script>
+        <script src="lib/bootstrap/polyfill.min.js"></script>
+        <script src="lib/bootstrap/bootstrap-vue.js"></script>
+        <script src="js/helpers.js"></script>
+        <script src="js/state.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/game.js"></script>
+        <script src="js/stats.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
