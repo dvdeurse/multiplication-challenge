@@ -157,7 +157,7 @@ Vue.component('game', {
             </b-row>
             <b-row class="mt-5">
                 <b-col sm="4">
-                    <div class="border border-dark pt-2 pb-2 pl-3 pr-3" style="margin-top: 1px;">
+                    <div class="border border-dark pt-2 pb-2 pl-3 pr-3 text-center" style="margin-top: 1px;">
                         Te verdienen: {{exercise.score}}
                     </div>
                 </b-col>    
@@ -167,7 +167,7 @@ Vue.component('game', {
                     </div>
                 </b-col>    
                 <b-col sm="4">
-                    <div class="border border-dark pt-2 pb-2 pl-3 pr-3" style="margin-top: 1px;">
+                    <div class="border border-dark pt-2 pb-2 pl-3 pr-3 text-center" style="margin-top: 1px;">
                         Totaal: {{totalScore}}
                     </div>
                 </b-col>    
