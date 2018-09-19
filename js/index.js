@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
     data: {
         mode: 0,
-        title: 'Tafelspel',
+        title: 'Tafels van vermenigvulding',
         menu: [
             { title: 'Spelen' },
             { title: 'Instellingen' },
@@ -16,6 +16,9 @@ new Vue({
     },
     methods: {
         switchMode: function(mode) {
+            if(this.mode == 1 && mode !== 1) {
+                saveStateToStorage()
+            }
             this.mode = mode;
         }
     }

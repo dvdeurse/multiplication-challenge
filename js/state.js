@@ -1,5 +1,9 @@
-var applicationState = {
-    config: {
+var applicationState = {};
+
+if(localStorage.state) {
+    applicationState = JSON.parse(localStorage.state);
+} else {
+    applicationState.config = {
         tables: [
             {
                 arg: 1,
@@ -54,10 +58,14 @@ var applicationState = {
         ],
         maxTimeInM: 1,
         maxNrOfErrors: 10,
-    },
-    stats: {
+    };
+    applicationState.stats = {
         nrOfGamesPlayed: 0,
         highestScore: 0,
         playerWithHighestScore: ''
     }
-};
+}
+
+function saveStateToStorage() {
+    localStorage.state = JSON.stringify(applicationState);
+}
