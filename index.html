@@ -25,11 +25,15 @@
             .card {
                 border: none;
             }
+
+            [v-cloak] {
+                display: none;
+            }
         </style>
     </head>
     <body>
         <div id="app" data-app="true">
-            <b-card no-body style="width: 100%;">
+            <b-card no-body style="width: 100%;" v-cloak>
                 <b-card-header>
                     <b-dropdown id="ddown-right" right text="Menu" variant="link" class="float-right">
                         <b-dropdown-item 
