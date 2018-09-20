@@ -1,1 +1,4 @@
-build/
+package/
+dist/
+node_modules/
+.vscode/
