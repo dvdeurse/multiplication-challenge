@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
     data: {
         mode: 0,
-        title: 'Tafels van vermenigvulding',
+        title: 'Reken challenge',
         menu: [
             { title: 'Spelen' },
             { title: 'Instellingen' },

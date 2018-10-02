@@ -21,8 +21,13 @@ Vue.component('game', {
     },
     computed: {
         tables: function() {
-            return this.state.config.tables.filter(function(t) {
-                return t.enabled;
+            return this.state.config.tables.filter(function(x) {
+                return x.enabled;
+            });
+        },
+        sums: function() {
+            return this.state.config.sums.filter(function(x) {
+                return x.enabled;
             });
         }        
     },
@@ -67,7 +72,18 @@ Vue.component('game', {
                 return;
             }
             this.previousAnswer = this.answer;
-            var correctAnswer = this.exercise.left * this.exercise.right;
+            var correctAnswer;
+            switch(this.exercise.operator) {
+                case 'x':
+                    correctAnswer = this.exercise.left * this.exercise.right;
+                    break;
+                case '+':
+                    correctAnswer = this.exercise.left + this.exercise.right;
+                    break;
+                case '-':
+                    correctAnswer = this.exercise.left - this.exercise.right;
+                    break;            
+            }            
             var answerGiven = parseInt(this.answer);
             if(correctAnswer === answerGiven) {                
                 this.totalScore += this.exercise.score;
@@ -89,11 +105,69 @@ Vue.component('game', {
             }
             this.answer = null;
             this.previousAnswer = null;
-            var step = 1 + Math.floor(Math.random() * 10);
-            var tableIndex = Math.floor(Math.random() * this.tables.length);            
-            this.exercise.left = step;
-            this.exercise.right = this.tables[tableIndex].arg;
-            this.exercise.score = this.tables[tableIndex].maxScore;
+
+            var modes = [];
+            if(this.state.config.enableSums) {
+                modes.push('sums');
+            }
+            if(this.state.config.enableTables) {
+                modes.push('tables');
+            }
+            var modeIndex = randomInt(0, modes.length);
+            var mode = modes[modeIndex];
+            switch(mode) {
+                case 'sums':
+                    var sumIndex = randomInt(0, this.sums.length);
+                    switch(this.sums[sumIndex].id) {
+                        case '+10':
+                            this.exercise.operator = '+';
+                            this.exercise.left = randomInt(0, 11);
+                            this.exercise.right = randomInt(0, 11 - this.exercise.left);
+                            break;
+                        case '-10':
+                            this.exercise.operator = '-';
+                            this.exercise.left = randomInt(0, 11);
+                            this.exercise.right = randomInt(0, this.exercise.left + 1);
+                            break;
+                        case '+20':
+                            this.exercise.operator = '+';
+                            this.exercise.left = randomInt(1, 20);
+                            var lowerBound = this.exercise.left < 10 ? 10 : 1
+                            var upperBound = 20 - this.exercise.left;
+                            this.exercise.right = randomInt(lowerBound, upperBound + 1);
+                            break;
+                        case '-20':
+                            this.exercise.operator = '-';
+                            this.exercise.left = randomInt(11, 21);
+                            var candidates = [randomInt(10, this.exercise.left), randomInt(1, this.exercise.left-10)];
+                            this.exercise.right = candidates[randomInt(0, candidates.length)];
+                            break;
+                        case '+20brug':
+                            this.exercise.operator = '+';
+                            this.exercise.left = randomInt(2, 10);
+                            var lowerBound = 11 - this.exercise.left;
+                            var upperBound = 9;
+                            this.exercise.right = randomInt(lowerBound, upperBound + 1);
+                            break;
+                        case '-20brug':
+                            this.exercise.operator = '-';
+                            this.exercise.left = randomInt(11, 19);
+                            var lowerBound = this.exercise.left - 9;
+                            var upperBound = 9;
+                            this.exercise.right = randomInt(lowerBound, upperBound + 1);
+                            break;
+                    }
+                    this.exercise.score = this.sums[sumIndex].maxScore;    
+                    break;
+                case 'tables': 
+                    var step = randomInt(1, 11);
+                    var tableIndex = randomInt(0, this.tables.length);            
+                    this.exercise.operator = 'x';
+                    this.exercise.left = step;
+                    this.exercise.right = this.tables[tableIndex].arg;
+                    this.exercise.score = this.tables[tableIndex].maxScore;    
+                    break;
+            } 
             this.showError = false;
             this.startScoreCounter();
         },
@@ -145,7 +219,7 @@ Vue.component('game', {
             </b-row>
             <b-row style="font-size: 50pt; text-align: right; margin-top: 40px;">
                 <b-col sm="4">
-                    <div>{{exercise.left}} x {{exercise.right}}</div>
+                    <div>{{exercise.left}} {{exercise.operator}} {{exercise.right}}</div>
                 </b-col>
                 <b-col style="text-align: center;" sm="1">
                     <div>=</div>    
