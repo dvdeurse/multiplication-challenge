@@ -217,7 +217,7 @@ Vue.component('game', {
                     </div>                    
                 </b-col>
             </b-row>
-            <b-row style="font-size: 50pt; text-align: right; margin-top: 40px;">
+            <b-row style="font-size: 50pt; text-align: right; margin-top: 100px;">
                 <b-col sm="4">
                     <div>{{exercise.left}} {{exercise.operator}} {{exercise.right}}</div>
                 </b-col>
@@ -229,7 +229,7 @@ Vue.component('game', {
                 </b-col>
                 <b-col sm="3"><div v-if="showError" style="font-size: 30pt; color: red; margin-top: 20px;">Fout!</div></b-col>
             </b-row>
-            <b-row class="mt-5">
+            <b-row style="margin-top: 150px;">
                 <b-col sm="4">
                     <div class="border border-dark pt-2 pb-2 pl-3 pr-3 text-center" style="margin-top: 1px;">
                         Te verdienen: {{exercise.score}}
