@@ -98,6 +98,7 @@ if(localStorage.state) {
         ],
         maxTimeInM: 1,
         maxNrOfErrors: 10,
+        resetOnError: false
     };
     applicationState.stats = {
         nrOfGamesPlayed: 0,

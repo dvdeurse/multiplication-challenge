@@ -6,6 +6,7 @@ Vue.component('game', {
             mode: 0,
 
             exercise: {},
+            lastExercise: '',
             showError: false,
             answer: null,
             previousAnswer: null,
@@ -88,24 +89,30 @@ Vue.component('game', {
             if(correctAnswer === answerGiven) {                
                 this.totalScore += this.exercise.score;
                 this.nrOfExercisesCorrect++;
-                this.$refs.answerInput.$el.blur();
                 this.next();
             } else {
                 this.showError = true;
                 this.nrOfErrors++;
+                if(this.state.config.resetOnError) {
+                    this.resetAnswer();
+                }
             }
-            this.exercise.evaluated = true;
             if(this.nrOfErrors >= this.state.config.maxNrOfErrors) {
                 this.endGame();
             }
         },
-        next: function() {
+        resetAnswer: function() {
+            if(this.$refs.answerInput) {
+                this.$refs.answerInput.$el.blur();
+            }
+            this.answer = null;
             if(this.$refs.answerInput) {
                 this.$refs.answerInput.$el.focus();
             }
-            this.answer = null;
+        },
+        next: function() {
+            this.resetAnswer();
             this.previousAnswer = null;
-
             var modes = [];
             if(this.state.config.enableSums) {
                 modes.push('sums');
@@ -169,7 +176,13 @@ Vue.component('game', {
                     break;
             } 
             this.showError = false;
-            this.startScoreCounter();
+            var exStr = this.exercise.left + this.exercise.operator + this.exercise.right;
+            if(exStr === this.lastExercise) {
+                this.next();
+            } else {
+                this.lastExercise = exStr;
+                this.startScoreCounter();
+            }            
         },
         nameInputKeydownHandler: function(event) {
             if (event.which === 13) {

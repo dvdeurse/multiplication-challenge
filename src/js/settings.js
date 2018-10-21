@@ -27,7 +27,14 @@ Vue.component('settings', {
                 <b-form-input type="number" v-model="state.config.maxNrOfErrors"></b-form-input>
             </b-col>
         </b-row>
-        <b-row>
+        <b-row class="mt-1">
+            <b-col>
+                <b-form horizontal>        
+                    <b-form-checkbox v-model="state.config.resetOnError">Wis bij fout?</b-form-checkbox>
+                </b-form>
+            </b-col>
+        </b-row>
+        <b-row class="mt-2">
             <b-col>
                 <b-form horizontal>        
                     <b-form-checkbox v-model="state.config.enableSums">Sommen?</b-form-checkbox>
