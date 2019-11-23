@@ -68,6 +68,13 @@ Vue.component('settings', {
                 </b-form>
             </b-col>            
         </b-row>
+        <b-row class="mt-2" v-if="state.config.enableTables">
+            <b-col>
+                <b-form horizontal>        
+                    <b-form-checkbox v-model="state.config.enableDivisions">Delingen?</b-form-checkbox>
+                </b-form>
+            </b-col>            
+        </b-row>
         <b-list-group class="mt-3" v-if="state.config.enableTables">
             <b-list-group-item v-for="(item, i) in state.config.tables" :key="i">
                 <b-row><h5>De tafel van {{i+1}}</h5></b-row>

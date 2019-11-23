@@ -78,6 +78,9 @@ Vue.component('game', {
                 case 'x':
                     correctAnswer = this.exercise.left * this.exercise.right;
                     break;
+                case ':':
+                    correctAnswer = this.exercise.left / this.exercise.right;
+                    break;
                 case '+':
                     correctAnswer = this.exercise.left + this.exercise.right;
                     break;
@@ -168,10 +171,19 @@ Vue.component('game', {
                     break;
                 case 'tables': 
                     var step = randomInt(1, 11);
-                    var tableIndex = randomInt(0, this.tables.length);            
-                    this.exercise.operator = 'x';
-                    this.exercise.left = step;
+                    var tableIndex = randomInt(0, this.tables.length);
+                    var tableOperators = ['x'];
+                    if(this.state.config.enableDivisions) {
+                        tableOperators.push(':');
+                    }
+                    var tableOperatorIndex = randomInt(0, tableOperators.length);
+                    this.exercise.operator = tableOperators[tableOperatorIndex];
                     this.exercise.right = this.tables[tableIndex].arg;
+                    if (this.exercise.operator == ':') {
+                        this.exercise.left = step * this.exercise.right;
+                    } else {
+                        this.exercise.left = step;
+                    }
                     this.exercise.score = this.tables[tableIndex].maxScore;    
                     break;
             } 

@@ -44,10 +44,11 @@ if(localStorage.state) {
             }
         ],
         enableTables: true,
+        enableDivisions: false,
         tables: [
             {
                 arg: 1,
-                enabled: true,
+                enabled: false,
                 maxScore: 60
             },
             {
@@ -57,12 +58,12 @@ if(localStorage.state) {
             },
             {
                 arg: 3,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
                 arg: 4,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
@@ -72,22 +73,22 @@ if(localStorage.state) {
             },
             {
                 arg: 6,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
                 arg: 7,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
                 arg: 8,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
                 arg: 9,
-                enabled: false,
+                enabled: true,
                 maxScore: 60
             },
             {
@@ -96,9 +97,9 @@ if(localStorage.state) {
                 maxScore: 60
             }
         ],
-        maxTimeInM: 1,
-        maxNrOfErrors: 10,
-        resetOnError: false
+        maxTimeInM: 3,
+        maxNrOfErrors: 5,
+        resetOnError: true
     };
     applicationState.stats = {
         nrOfGamesPlayed: 0,
